@@ -1,0 +1,20 @@
+# 사용자 서비스: systemctl --user enable --now agent
+# 로그인하지 않아도 돌게 하려면 한 번: sudo loginctl enable-linger $USER
+[Unit]
+Description=Personal AI agent (Slack Socket Mode daemon)
+
+[Service]
+Type=simple
+WorkingDirectory=%h/agent
+EnvironmentFile=%h/agent/.env
+# agy / claude / bwrap 을 찾을 수 있게
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/.local/bin/uv run --frozen python -m agent
+Restart=on-failure
+RestartSec=10
+# 진행 중인 CLI 호출(bwrap 안의 agy 포함)까지 함께 정리
+KillMode=control-group
+TimeoutStopSec=20
+
+[Install]
+WantedBy=default.target

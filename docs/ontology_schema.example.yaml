@@ -1,0 +1,68 @@
+# 온톨로지 기준표 예시 — <Vault>/_Indexes/ontology_schema.yaml 로 복사해 자기 것으로 고친다.
+# 문서 요약 시 프로젝트·태그·문서 유형·엔터티를 이 목록 안에서만 고른다 (태그 파편화 방지).
+# 바꾸면 다음 색인부터 반영되고, 기존 요약은 `uv run python -m indexer --reindex` 로 다시 만든다.
+# 이 파일은 Vault 에만 두고 저장소에는 올리지 않는다 (실제 회사·학교·인물 정보가 들어간다).
+version: 3
+
+# 프로젝트: paths 의 접두사와 일치하는 문서는 AI 판단 없이 이 프로젝트로 고정된다.
+# 경로는 "<원본 루트 이름>/<상대 경로>" (예: Documents/Work). description 은 AI 가 분류할 때 참고한다.
+# parent: 상위 프로젝트, org: 수행조직 (entities.조직 의 name). org 를 비우면 상위 프로젝트의 것을 물려받는다.
+projects:
+  - name: Work
+    paths: [Documents/Work]
+    org: 예시회사
+    description: 회사 업무 자료
+  - name: SideProject
+    paths: [Documents/SideProject]
+    parent: Work
+    description: 회사에서 진행한 사이드 프로젝트
+  - name: 자격증
+    paths: [Documents/자격증]
+    description: 자격증 시험 준비·증빙 자료
+  - name: 기타
+    paths: []
+    description: 어느 프로젝트에도 속하지 않는 문서
+
+# 엔터티: 관계로 연결할 조직·인물. aliases 는 문서 요약에서 이름을 찾을 때도 쓴다.
+# 제3자 개인정보가 쌓이지 않게 인물은 꼭 필요한 사람만 적는다.
+entities:
+  조직:
+    - name: 예시회사
+      aliases: [Example Corp]
+      description: 현 직장
+    - name: 예시대학교
+      aliases: [예시대]
+      description: 출신 학교
+  인물:
+    - name: 나
+      aliases: []
+      description: 이 Vault 의 주인
+      소속:
+        - {org: 예시회사, from: 2024-01}
+        - {org: 예시대학교, from: 2015-03, to: 2021-02}
+
+doc_types:
+  - 보고서
+  - 발표자료
+  - 기획서
+  - 계약서
+  - 지원서류
+  - 강의자료
+  - 논문
+  - 매뉴얼
+  - 데이터
+  - 증빙
+  - 기타
+
+# 허용 태그. AI 는 여기서만 고르고, 목록에 없는 주제는 tag_candidates 로 따로 제안한다.
+tags:
+  - 예산
+  - 일정
+  - 계약
+  - 회의록
+  - 기획
+  - 설계
+  - 개발
+  - AI
+  - 채용
+  - 교육

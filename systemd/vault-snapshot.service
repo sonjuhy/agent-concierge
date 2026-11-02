@@ -1,0 +1,7 @@
+[Unit]
+Description=Obsidian vault local git snapshot
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/agent/.env
+ExecStart=%h/agent/scripts/vault_snapshot.sh

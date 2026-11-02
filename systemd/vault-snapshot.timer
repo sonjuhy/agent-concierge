@@ -1,0 +1,10 @@
+# 매일 자정 Vault 스냅샷. 서버가 꺼져 있었으면 켜진 뒤 한 번 실행(Persistent)
+[Unit]
+Description=Nightly Obsidian vault git snapshot
+
+[Timer]
+OnCalendar=*-*-* 00:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

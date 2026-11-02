@@ -1,0 +1,10 @@
+[Unit]
+Description=Import Gemini Spark summaries (Drive/Spark_Sync) into the Obsidian vault
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/agent
+EnvironmentFile=%h/agent/.env
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/.local/bin/uv run --frozen python -m indexer.gdrive
+TimeoutStartSec=15min

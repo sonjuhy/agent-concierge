@@ -1,0 +1,33 @@
+# Slack 앱 생성용 manifest: https://api.slack.com/apps → Create New App → From a manifest
+# Socket Mode 이므로 공개 URL(Request URL)이 필요 없다.
+display_information:
+  name: Agent
+  description: 개인 AI 에이전트 (agy + claude)
+features:
+  bot_user:
+    display_name: agent
+    always_online: true
+  app_home:
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: false
+oauth_config:
+  scopes:
+    bot:
+      - app_mentions:read   # 채널에서 @agent 멘션 수신
+      - chat:write          # 답변 전송
+      - channels:history    # 공개 채널 스레드 문맥
+      - groups:history      # 비공개 채널 스레드 문맥
+      - im:history          # DM 수신
+      - im:read
+      - im:write
+      - reactions:write     # 처리 중(⏳)/완료(✅) 표시
+settings:
+  event_subscriptions:
+    bot_events:
+      - app_mention
+      - message.im
+  interactivity:
+    is_enabled: true        # Block Kit [승인]/[취소] 버튼
+  socket_mode_enabled: true
+  org_deploy_enabled: false
+  token_rotation_enabled: false

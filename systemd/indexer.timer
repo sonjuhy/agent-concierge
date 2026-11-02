@@ -1,0 +1,10 @@
+# 15분마다 바뀐 문서만 색인 (변경 없으면 해시도 계산하지 않음)
+[Unit]
+Description=Periodic document indexing
+
+[Timer]
+OnBootSec=5min
+OnUnitInactiveSec=15min
+
+[Install]
+WantedBy=timers.target

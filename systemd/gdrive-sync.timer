@@ -1,0 +1,10 @@
+# Spark 가 04:00 에 요약을 만든 뒤 30분 여유를 두고 가져온다. 서버가 꺼져 있었으면 켜진 뒤 한 번(Persistent)
+[Unit]
+Description=Daily Spark_Sync import at 04:30
+
+[Timer]
+OnCalendar=*-*-* 04:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

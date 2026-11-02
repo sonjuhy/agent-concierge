@@ -1,0 +1,17 @@
+# 복사해서 ~/agent/data/users.yaml 로 저장한 뒤 `systemctl --user restart agent`.
+# 이 파일이 없으면 1인 구성(.env 의 SLACK_ALLOWED_USER_ID)으로 동작한다. docs/MULTI_USER.md 참고.
+
+# 가족 모두 읽고 쓰는 공용 폴더 (장보기 목록 등). 필요 없으면 지운다.
+shared: ~/Family/공유
+
+users:
+  # 관리자(본인): claude(--deep·메일 요약)·문서 색인·헬스체크. .env 의 Vault·agy·Google 토큰을 그대로 쓴다
+  - name: 나
+    slack_id: U0XXXXXXXXX
+    role: owner
+
+  # 가족: 각자 agy(Gemini) 계정, 메일은 목록만. 폴더는 ~/Family/<이름>/ (vault: 로 바꿀 수 있음)
+  # Slack 멤버 ID: 프로필 → ⋮ → 멤버 ID 복사
+  # - name: 가족A
+  #   slack_id: U0XXXXXXXXX
+  #   role: family
